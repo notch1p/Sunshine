@@ -1,13 +1,13 @@
 require "language/node"
 
-class @PROJECT_NAME@ < Formula
-  desc "@PROJECT_DESCRIPTION@"
-  homepage "@PROJECT_HOMEPAGE_URL@"
-  url "@GITHUB_CLONE_URL@",
-    tag: "@GITHUB_BRANCH@"
-  version "@PROJECT_VERSION@"
-  license all_of: ["GPL-3.0-only"]
-  head "@GITHUB_CLONE_URL@", branch: "nightly"
+class Sunshine < Formula
+  desc "Gamestream host/server for Moonlight"
+  homepage "https://app.lizardbyte.dev"
+  url "https://github.com/notch1p/Sunshine.git",
+      branch: "nightly"
+  license "GPL-3.0-only"
+  version "cd6a36b"
+  head "https://github.com/LizardByte/Sunshine.git", branch: "nightly"
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
@@ -19,6 +19,10 @@ class @PROJECT_NAME@ < Formula
   depends_on "opus"
 
   def install
+    system "git", "submodule", "update", "--remote", "--init", "--recursive", "--depth", "1"
+    # Fix https://github.com/LizardByte/Sunshine/discussions/391#discussioncomment-8689960
+    # system "sed", "-i", "''", "s/SUNSHINE_ASSETS_DIR=${CMAKE_BINARY_DIR}/SUNSHINE_ASSETS_DIR=${CMAKE_SOURCE_DIR}\\build/", "cmake/targets/common.cmake"
+
     args = %W[
       -DBUIld_WERROR=ON
       -DCMAKE_INSTALL_PREFIX=#{prefix}
@@ -37,26 +41,8 @@ class @PROJECT_NAME@ < Formula
   service do
     run [opt_bin/"sunshine", "~/.config/sunshine/sunshine.conf"]
   end
-
-  def caveats
-    <<~EOS
-      Thanks for installing @PROJECT_NAME@!
-
-      To get started, review the documentation at:
-        https://docs.lizardbyte.dev/projects/sunshine/en/latest/
-
-      Sunshine can only access microphones on macOS due to system limitations.
-      To stream system audio use "Soundflower" or "BlackHole".
-
-      Gamepads are not currently supported on macOS.
-    EOS
-  end
-
   test do
-    # test that the binary runs at all
-    output = shell_output("#{bin}/sunshine --version").strip
-    puts output
-
-    # TODO: add unit tests
+    # test that version numbers match
+    assert_match "Sunshine version: v0.22.0", shell_output("#{bin}/sunshine --version").strip
   end
 end
