@@ -20,21 +20,12 @@ if (process.env.SUNSHINE_BUILD_HOMEBREW) {
   console.log("Building for homebrew, using default paths");
 } else {
   if (process.env.SUNSHINE_SOURCE_ASSETS_DIR) {
-    console.log(
-      "Using srcdir from Cmake: " +
-        resolve(process.env.SUNSHINE_SOURCE_ASSETS_DIR, "common/assets/web")
-    );
-    assetsSrcPath = resolve(
-      process.env.SUNSHINE_SOURCE_ASSETS_DIR,
-      "common/assets/web"
-    );
+    console.log("Using srcdir from Cmake: " + resolve("common/assets/web"));
+    assetsSrcPath = resolve("common/assets/web");
   }
   if (process.env.SUNSHINE_ASSETS_DIR) {
-    console.log(
-      "Using destdir from Cmake: " +
-        resolve(process.env.SUNSHINE_ASSETS_DIR, "assets/web")
-    );
-    assetsDstPath = resolve(process.env.SUNSHINE_ASSETS_DIR, "assets/web");
+    console.log("Using destdir from Cmake: " + resolve("assets/web"));
+    assetsDstPath = resolve("assets/web");
   }
 }
 
