@@ -3,11 +3,12 @@ require "language/node"
 class Sunshine < Formula
   desc "Gamestream host/server for Moonlight"
   homepage "https://app.lizardbyte.dev"
-  url "/Users/notch1p/dockFolders/playground/Sunshine",
+  url "https://github.com/notch1p/Sunshine",
       # is tag required? won't be available until after a release is published
-      commit: "ce3b625"
+      commit: "cd6a36b",
+      branch: "nightly-ce3b625"
   license "GPL-3.0-only"
-  version "ce3b625"
+  version "cd6a36b"
   head "https://github.com/LizardByte/Sunshine.git", branch: "nightly"
 
   depends_on "cmake" => :build
